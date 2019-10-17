@@ -9,7 +9,7 @@ class UserData:
         db = Database()
         cursor = db.main()
         newUser = {
-            'user': name,
+            'name': name,
             'surname': surname,
             'user': user,
             'password': password,
