@@ -15,9 +15,14 @@ class Ventana1:
 
         self.master = master
         self.master.title('Ingreso de Usuario')
-        self.master.geometry('500x400+0+0')
+        self.master.geometry('700x200+0+0')
         self.frame = Frame(self.master)
         self.frame.pack()
+
+        user = StringVar()
+        password = StringVar()
+
+
 
         #====================================Variables===========================================================
 
@@ -47,13 +52,13 @@ class Ventana1:
         self.datoOp = Label(self.loginUsuarioL, text='Usuario: ')
         self.datoOp.grid(row= 0, column=0)
 
-        self.usuario = Entry(self.loginUsuarioE)
+        self.usuario = Entry(self.loginUsuarioE, textvariable=user)
         self.usuario.grid(row= 0, column=0)
 
         self.datoOp = Label(self.loginPassL, text='Contraseña: ')
         self.datoOp.grid(row= 0, column=0)
 
-        self.usuario = Entry(self.loginPassE)
+        self.usuario = Entry(self.loginPassE, textvariable=password, show='*')
         self.usuario.grid(row= 0, column=0)
 
         #===========================================Botones============================================================
@@ -61,7 +66,7 @@ class Ventana1:
         self.btnDetalles = Button(self.botones, text='Ingresar', command = lambda: self.ingresar())
         self.btnDetalles.grid(row=1, column= 1)
 
-        self.btnGraficar = Button(self.botones, text='Nuevo', command = lambda: self.ingresar())
+        self.btnGraficar = Button(self.botones, text='Nuevo', command = lambda: self.nuevoUsuario())
         self.btnGraficar.grid(row=1, column= 2)
 
         self.btnSalir = Button(self.botones, text='Salir', background= 'red', command = self.master.destroy)
