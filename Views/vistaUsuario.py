@@ -88,13 +88,16 @@ class Ventana1:
         self.master.mainloop()
 
     def ingresar(self):
-        a = UserController.validateUser(self.user, self.password)
+        controller = UserController()
+        a = controller.validateUser(self.user, self.password)
+        print(a.name)
         if a != None:
-
             self.respuesta = Label(self.spaceF, text=a)
             self.space.grid(row= 0, column=0)
-
+        else:
             print('Usuario vacio')
+            self.respuesta = Label(self.spaceF, text=a)
+            self.space.grid(row= 0, column=0)
 
 
     def new_window(self):
