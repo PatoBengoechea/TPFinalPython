@@ -1,6 +1,6 @@
 from tkinter import ttk
 from tkinter import *
-#from Controller.UserController import UserController
+from Controller.UserController import UserController
 import pandas as pd
 import matplotlib.pyplot as plt
 from tkinter import messagebox
@@ -20,8 +20,8 @@ class Ventana1:
         self.frame = Frame(self.master)
         self.frame.pack()
 
-        user = StringVar()
-        password = StringVar()
+        self.user = StringVar()
+        self.password = StringVar()
 
 
 
@@ -52,17 +52,20 @@ class Ventana1:
         self.botones = Frame(self.frame, width= 300, height = 50, relief='ridge', bd= 2)
         self.botones.grid(row=5, column=1)
 
+        self.respuesta = Frame(self.frame, width= 300, height = 50, relief='ridge', bd= 2)
+        self.respuesta.grid(row=6, column=1)
+
         #======================================Labels and Entries=================================================================
         self.datoOp = Label(self.loginUsuarioL, text='Usuario: ')
         self.datoOp.grid(row= 0, column=0)
 
-        self.usuario = Entry(self.loginUsuarioE, textvariable=user)
+        self.usuario = Entry(self.loginUsuarioE, textvariable=self.user)
         self.usuario.grid(row= 0, column=0)
 
         self.datoOp = Label(self.loginPassL, text='Contraseña: ')
         self.datoOp.grid(row= 0, column=0)
 
-        self.password = Entry(self.loginPassE, textvariable=password, show='*')
+        self.password = Entry(self.loginPassE, textvariable=self.password, show='*')
         self.password.grid(row= 0, column=0)
 
         self.space = Label(self.spaceF)
@@ -85,7 +88,17 @@ class Ventana1:
         self.master.mainloop()
 
     def ingresar(self):
-        pass
+        controller = UserController()
+        a = controller.validateUser(self.user, self.password)
+        print(a.name)
+        if a != None:
+            self.respuesta = Label(self.spaceF, text=a)
+            self.space.grid(row= 0, column=0)
+        else:
+            print('Usuario vacio')
+            self.respuesta = Label(self.spaceF, text=a)
+            self.space.grid(row= 0, column=0)
+
 
     def new_window(self):
         # t es un parametro de tipo que me permite conocer por que metodo se solicito la nueva ventana

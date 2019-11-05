@@ -1,1 +1,3 @@
 DataModel/Database.py
+__pycache__
+*.pyc
