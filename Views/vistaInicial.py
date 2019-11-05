@@ -81,12 +81,14 @@ class Ventana3:
         self.tv.column("two", width=100, anchor="e")
         self.tv.column("three", width=100)
         self.tv.column("four", width=100)
+        self.tv.column("five", width=100)
 
         #====================================TVHeadings===========================================================
-        self.tv.heading("one", text="Fecha")
-        self.tv.heading("two", text="Precio")
-        self.tv.heading("three", text="Apellido")
-        self.tv.heading("four", text="DNI")
+        self.tv.heading("one", text="Cereal")
+        self.tv.heading("two", text="Cantidad")
+        self.tv.heading("three", text="Inicio")
+        self.tv.heading("four", text="Fin")
+        self.tv.heading("five", text="Cotizaion")
 
         #===============================Prueba de insertar datos================================================
 
@@ -131,8 +133,6 @@ class Ventana3:
     def listar(self):
 
         self.tv.delete(*self.tv.get_children())
-
-        print(self.trades)
 
         for t in self.trades['trades']:
             self.tv.insert("" , 0, values=(t['datetime'],t['price']))
