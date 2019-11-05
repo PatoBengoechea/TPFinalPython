@@ -13,8 +13,13 @@ class UserData:
             'password': password,
             'wallet': wallet
         }
-        print(newUser)
-        cursor.usuario.insert_one(newUser)
+        try:
+            cursor.usuario.insert_one(newUser)
+            return True
+        except:
+            return False
+
+
 
 
     def getUser(self, user, password):
@@ -33,3 +38,8 @@ class UserData:
             return logUserModel
         else:
             return None
+
+
+
+a = UserData()
+a.createUser("Patito", "ben", "patito", 12312, 123)
