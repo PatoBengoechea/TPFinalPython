@@ -5,6 +5,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from tkinter import messagebox
 from Views.vistaNuevoUsuario import Ventana2
+from Views.vistaInicial import Ventana3
 
 def main():
 
@@ -17,7 +18,7 @@ class Ventana1:
 
         self.master = master
         self.master.title('Ingreso de Usuario')
-        self.master.geometry('700x200+0+0')
+        self.master.geometry('700x250+0+0')
         self.frame = Frame(self.master)
         self.frame.pack()
 
@@ -31,30 +32,46 @@ class Ventana1:
 
 
         #=====================================Frames================================================================
+        ubBlk = 0
 
         self.buscador = Frame(self.frame, width= 300, height= 50)
-        self.buscador.grid(row=0, column=1)
+        self.buscador.grid(row=ubBlk, column=1)
+
+        ubBlk = ubBlk + 1
 
         self.loginUsuarioL = Frame(self.frame, width= 300, height= 50)
-        self.loginUsuarioL.grid(row=1, column=0)
+        self.loginUsuarioL.grid(row=ubBlk, column=0)
 
         self.loginUsuarioE = Frame(self.frame, width= 300, height= 50)
-        self.loginUsuarioE.grid(row=1, column=1)
+        self.loginUsuarioE.grid(row=ubBlk, column=1)
+
+        ubBlk = ubBlk + 1
 
         self.loginPassL = Frame(self.frame, width= 300, height= 50)
-        self.loginPassL.grid(row=2, column=0)
+        self.loginPassL.grid(row=ubBlk, column=0)
 
         self.loginPassE = Frame(self.frame, width= 300, height= 50)
-        self.loginPassE.grid(row=2, column=1)
+        self.loginPassE.grid(row=ubBlk, column=1)
+
+        ubBlk = ubBlk + 1
 
         self.spaceF = Frame(self.frame, width= 300, height= 50)
-        self.spaceF.grid(row=4, column=0)
+        self.spaceF.grid(row=ubBlk, column=0)
+
+        ubBlk = ubBlk + 1
 
         self.botones = Frame(self.frame, width= 300, height = 50, relief='ridge', bd= 2)
-        self.botones.grid(row=5, column=1)
+        self.botones.grid(row=ubBlk, column=1)
+
+        ubBlk = ubBlk + 1
+
+        self.spaceF2 = Frame(self.frame, width= 300, height= 50)
+        self.spaceF2.grid(row=ubBlk, column=0)
+
+        ubBlk = ubBlk + 1
 
         self.respuesta = Frame(self.frame, width= 300, height = 50, relief='ridge', bd= 2)
-        self.respuesta.grid(row=6, column=1)
+        self.respuesta.grid(row=ubBlk, column=1)
 
         #======================================Labels and Entries=================================================================
         self.datoOp = Label(self.loginUsuarioL, text='Usuario: ')
@@ -74,14 +91,33 @@ class Ventana1:
 
         #===========================================Botones============================================================
 
+        ubBot = 1
+
         self.btnIngresar = Button(self.botones, text='Ingresar', background= 'DeepSkyBlue2',command = lambda: self.ingresar())
-        self.btnIngresar.grid(row=1, column= 1)
+        self.btnIngresar.grid(row=1, column= ubBot)
+
+        ubBot = ubBot + 1
+
+        self.spaceBtn = Label(self.botones)
+        self.spaceBtn.grid(row= 1, column= ubBot)
+
+        ubBot = ubBot + 1
 
         self.btnNuevoUsuario = Button(self.botones, text='Nuevo', background= 'pale green',command = lambda: self.nuevoUsuario())
-        self.btnNuevoUsuario.grid(row=1, column= 2)
+        self.btnNuevoUsuario.grid(row=1, column= ubBot)
+
+        ubBot = ubBot + 1
+
+        self.spaceBtn = Label(self.botones)
+        self.spaceBtn.grid(row= 1, column= ubBot)
+
+        ubBot = ubBot + 1
 
         self.btnSalir = Button(self.botones, text='Salir', background= 'orange red', command = self.master.destroy)
-        self.btnSalir.grid(row=1, column= 3)
+        self.btnSalir.grid(row=1, column= ubBot)
+
+        self.space = Label(self.spaceF2)
+        self.space.grid(row= 0, column=0)
 
         #=====================================Buscador===========================================================
 
@@ -95,6 +131,11 @@ class Ventana1:
         if a != None:
             self.respuesta = Label(self.respuesta, text=('Bienvenido: ' + a.name), background= 'pale green')
             self.respuesta.grid(row= 0, column=0)
+            self.name = a.name
+            self.surname = a.surname
+            self.new_window2()
+
+
         else:
             print('Usuario vacio')
             self.respuesta = Label(self.respuesta, text=a)
@@ -105,6 +146,11 @@ class Ventana1:
         # t es un parametro de tipo que me permite conocer por que metodo se solicito la nueva ventana
         self.newWindow = Toplevel(self.master)
         self.app = Ventana2(self.newWindow)
+
+    def new_window2(self):
+        # t es un parametro de tipo que me permite conocer por que metodo se solicito la nueva ventana
+        self.newWindow = Toplevel(self.master)
+        self.app = Ventana3(self.newWindow, self.user.get(), self.name, self.surname)
 
     def nuevoUsuario(self):
         self.new_window()
