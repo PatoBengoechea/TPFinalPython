@@ -30,16 +30,7 @@ class UserData:
         logUserJSON = cursor.usuario.find_one({"user": user, "password": password})
         if logUserJSON != None:
             logUserModel = User()
-            logUserModel.user = logUserJSON["user"]
-            logUserModel.password = logUserJSON["password"]
-            logUserModel.surname = logUserJSON["surname"]
-            logUserModel.wallet = logUserJSON["wallet"]
-            logUserModel.name = logUserJSON["name"]
+            logUserModel.parse(logUserJSON)
             return logUserModel
         else:
             return None
-
-
-
-a = UserData()
-a.createUser("Patito", "ben", "patito", 12312, 123)
