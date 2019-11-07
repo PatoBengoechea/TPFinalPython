@@ -74,21 +74,21 @@ class Ventana3:
         self.tv["columns"]=("one","two","three","four")
 
         vsb = ttk.Scrollbar(self.tv, orient="vertical", command=self.tv.yview)
-        vsb.place(x=30+355+2, y=20, height=200)
+        vsb.place(x=30+455+2, y=20, height=200)
 
         #====================================TVColums==============================================================
-        self.tv.column("one", width=200 )
+        self.tv.column("one", width=200)
         self.tv.column("two", width=100, anchor="e")
         self.tv.column("three", width=100)
         self.tv.column("four", width=100)
-        self.tv.column("five", width=100)
+
 
         #====================================TVHeadings===========================================================
         self.tv.heading("one", text="Cereal")
         self.tv.heading("two", text="Cantidad")
         self.tv.heading("three", text="Inicio")
         self.tv.heading("four", text="Fin")
-        self.tv.heading("five", text="Cotizaion")
+
 
         #===============================Prueba de insertar datos================================================
 
@@ -132,7 +132,10 @@ class Ventana3:
 
     def listar(self):
 
+
         self.tv.delete(*self.tv.get_children())
+
+        print(self.trades)
 
         for t in self.trades['trades']:
             self.tv.insert("" , 0, values=(t['datetime'],t['price']))
