@@ -12,22 +12,15 @@ class CosechaData:
         try:
             data = cursor.cosecha.find({"productor" : productor})
             for i in data:
-                nc = Cosecha()
-                nc.cereal = i["cereal"]
-                nc.cantidadProduccion = i["cantidadProduccion"]
-                nc.inicio = i["inicio"]
-                nc.fin = i["fin"]
-                user = i["productor"]
-                arrayVentas = i["ventas"]
                 ventas = []
-                for ven in arrayVentas:
+                for ven in i["ventas"]:
                     v = Venta()
                     v.fecha = ven["fecha"]
                     v.cantidad = ven["cantidad"]
                     v.monto = ven["monto"]
                     ventas.append(v)
-                nc.ventas = ventas
-                productorJSON = cursor.usuario.find_one({"user": user})
+                nc = Cosecha(i["cereal"], i["cantidadProduccion"], i["inicio"], i["fin"], i["productor"], ventas)
+                productorJSON = cursor.usuario.find_one({"user": productor})
                 productor = User()
                 productor.parse(productorJSON)
                 nc.productor = productor
@@ -58,5 +51,4 @@ class CosechaData:
 
 
 
-a = CosechaData()
-a.getCosechas("juunchy")
+

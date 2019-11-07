@@ -14,5 +14,15 @@ class CosechaController:
             return False
 
 
-    def getCocecha(self):
+    def getCocecha(self, productorActual):
+        dbCosecha = CosechaData()
+        cosechas = dbCosecha.getCosechas(productorActual)
+        if(cosechas != None):
+            return cosechas
+        else:
+            return None
 
+#borrar all
+a = CosechaController()
+b = a.getCocecha('juunchy')
+print(b[0].cereal)

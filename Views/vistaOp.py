@@ -4,17 +4,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from tkinter import messagebox
 
-from prueba import armarListadoDeTrades
-from prueba import getListaSimbolos
+from Controller.prueba import armarListadoDeTrades
+from Controller.prueba import getListaSimbolos
 
 
-
-def main():
-
-    root = Tk()
-    app = Ventana1(root)
-
-class Ventana1:
+class Ventana5:
 
     def __init__(self, master):
 
@@ -95,14 +89,11 @@ class Ventana1:
 
         #===========================================Botones============================================================
 
-        self.btnDetalles = Button(self.botones, text='Detalles', command = lambda: self.showDetails())
-        self.btnDetalles.grid(row=1, column= 1)
-
         self.btnGraficar = Button(self.botones, text='Graficar', command = lambda: self.plot(self.trades))
-        self.btnGraficar.grid(row=1, column= 2)
+        self.btnGraficar.grid(row=1, column= 1)
 
         self.btnSalir = Button(self.botones, text='Salir', background= 'red', command = self.master.destroy)
-        self.btnSalir.grid(row=1, column= 3)
+        self.btnSalir.grid(row=1, column= 2)
 
         #=====================================Buscador===========================================================
         self.comboExample = ttk.Combobox(self.buscador,
@@ -160,86 +151,3 @@ class Ventana1:
 
         self.datoOp2 = Label(self.detalleI, text=self.mercado)
         self.datoOp2.grid(row= 0, column=2)
-
-
-
-
-class Ventana2:
-
-    def __init__(self, master, itemA, trades):
-        self.master = master
-        self.master.title('Detalle')
-        self.master.geometry('450x200')
-        self.frame = Frame(self.master)
-        self.frame.pack()
-        self.trades = trades
-
-        if itemA != None:
-            self.itemA = itemA
-
-
-        #====================================Variables===========================================================
-
-        #=====================================Frames================================================================
-        self.muestraDatos = Frame(self.frame, width= 100, height = 50, relief='ridge', bd= 2)
-        self.muestraDatos.grid(row= 2, column=0)
-
-        self.etiquetas = Frame(self.muestraDatos, width= 100, height = 50,)
-        self.etiquetas.grid(row= 1, column=1)
-
-        self.botones = Frame(self.frame, width= 100, height = 50)
-        self.botones.grid(row= 12, column=0)
-
-        #=======================================Botones================================================================
-
-        self.btnSalir = Button(self.botones, text='Cancelar', background= 'red', command = self.master.destroy)
-        self.btnSalir.grid(row=0, column= 2)
-
-        #=====================================Etiquetas==========================================================
-
-        self.mostrarDetales()
-
-
-    def buscarDetalles(self):
-        for t in self.trades['trades']:
-            print(t)
-            print(t['datetime'])
-            if t['datetime'] == self.itemA[0]:
-                print('Datos del registro actual: ', t)
-                return t
-            else:
-                pass
-
-    def mostrarDetales(self):
-        if self.itemA != None:
-            d = self.buscarDetalles()
-
-            self.etDate = Label(self.etiquetas, text= 'Fecha de la Operacion:',)
-            self.etDate.config(font=("Arial", 11, 'bold'))
-            self.etDate.grid(row=1, column= 0)
-            self.etDate2 = Label(self.etiquetas, text= d['datetime'], )
-            self.etDate2.config(font=("Arial", 11))
-            self.etDate2.grid(row=1, column= 1)
-
-            self.etPrice = Label(self.etiquetas, text= 'Precio:', )
-            self.etPrice.config(font=("Arial", 11, 'bold'))
-            self.etPrice.grid(row=2, column= 0)
-            self.etPrice2 = Label(self.etiquetas, text= d['price'], )
-            self.etPrice2.config(font=("Arial", 11))
-            self.etPrice2.grid(row=2, column= 1)
-
-            self.etSvT = Label(self.etiquetas, text= 'Tiempo de Servidor:', )
-            self.etSvT.config(font=("Arial", 11, 'bold'))
-            self.etSvT.grid(row=3, column= 0)
-            self.etSvT2 = Label(self.etiquetas, text= d['servertime'], )
-            self.etSvT2.config(font=("Arial", 11))
-            self.etSvT2.grid(row=3, column= 1)
-
-            self.etSimbol = Label(self.etiquetas, text= 'Simbolo:', )
-            self.etSimbol.config(font=("Arial", 11, 'bold'))
-            self.etSimbol.grid(row=4, column= 0)
-            self.etSimbol2 = Label(self.etiquetas, text= d['symbol'], )
-            self.etSimbol2.config(font=("Arial", 11))
-            self.etSimbol2.grid(row=4, column= 1)
-
-main()
