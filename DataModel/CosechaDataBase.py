@@ -1,15 +1,16 @@
 from DataModel.Database import Database
 from Model.Cosecha import Cosecha
 from Model.User import User
+from Model.Venta import Venta
 from bson import ObjectId
 
 class CosechaData:
-    def getCosechas(self):
+    def getCosechas(self, productor):
         db = Database()
         cursor = db.main()
         cosechas = []
         try:
-            data = cursor.cosecha.find()
+            data = cursor.cosecha.find({"productor" : productor})
             for i in data:
                 nc = Cosecha()
                 nc.cereal = i["cereal"]
@@ -17,6 +18,15 @@ class CosechaData:
                 nc.inicio = i["inicio"]
                 nc.fin = i["fin"]
                 user = i["productor"]
+                arrayVentas = i["ventas"]
+                ventas = []
+                for ven in arrayVentas:
+                    v = Venta()
+                    v.fecha = ven["fecha"]
+                    v.cantidad = ven["cantidad"]
+                    v.monto = ven["monto"]
+                    ventas.append(v)
+                nc.ventas = ventas
                 productorJSON = cursor.usuario.find_one({"user": user})
                 productor = User()
                 productor.parse(productorJSON)
@@ -48,3 +58,5 @@ class CosechaData:
 
 
 
+a = CosechaData()
+a.getCosechas("juunchy")

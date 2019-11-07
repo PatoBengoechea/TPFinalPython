@@ -4,3 +4,4 @@ class Cosecha:
     inicio = ""
     fin = ""
     productor = None
+    ventas = []
