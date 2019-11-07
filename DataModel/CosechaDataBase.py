@@ -23,12 +23,13 @@ class CosechaData:
                     ventas.append(v)
                 nc = Cosecha(i["cereal"], i["cantidadProduccion"], i["inicio"], i["fin"], i["productor"], ventas)
                 productorJSON = cursor.usuario.find_one({"user": productor})
-                productor = User()
-                productor.parse(productorJSON)
-                nc.productor = productor
+                productorObject = User()
+                productorObject.parse(productorJSON)
+                nc.productor = productorObject
                 cosechas.append(nc)
             return cosechas
-        except:
+        except NameError:
+            print(NameError)
             return None
 
 
@@ -49,8 +50,5 @@ class CosechaData:
         except:
             print("wrong")
             return False
-
-
-
 
 
