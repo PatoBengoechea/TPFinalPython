@@ -13,7 +13,9 @@ class CosechaData:
             data = cursor.cosecha.find({"productor" : productor})
             for i in data:
                 ventas = []
-                for ven in i["ventas"]:
+                id = i["_id"]
+                ventasJSON = cursor.ventas.find({"cosecha":ObjectId(id)})
+                for ven in ventasJSON:
                     v = Venta()
                     v.fecha = ven["fecha"]
                     v.cantidad = ven["cantidad"]
