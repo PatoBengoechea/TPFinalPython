@@ -7,6 +7,7 @@ from Controller.CosechaControler import CosechaController
 from Controller.controladorPrecios import controladorPrecios
 
 from Views.vistaOp import Ventana5
+from Views.vistaAgregarCosecha import Ventana6
 
 class Ventana3:
 
@@ -213,7 +214,7 @@ class Ventana3:
     def new_window2(self):
         # t es un parametro de tipo que me permite conocer por que metodo se solicito la nueva ventana
         self.newWindow = Toplevel(self.master)
-        self.app = Ventana5(self.newWindow)
+        self.app = Ventana6(self.newWindow, self.user)
 
 
 

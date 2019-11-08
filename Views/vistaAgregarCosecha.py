@@ -1,19 +1,23 @@
 from tkinter import ttk
 from tkinter import *
 
+from Controller.CosechaControler import CosechaController
+
 class Ventana6:
 
-    def __init__(self,master):
+    def __init__(self, master, user):
         self.master = master
         self.master.title('Panel Principal')
         self.master.geometry('1400x500+0+0')
         self.frame = Frame(self.master)
         self.frame.pack()
 
-        self.user = StringVar()
-        self.password = StringVar()
-        self.name = StringVar()
-        self.surname = StringVar()
+        self.user = user
+
+        self.cereal = StringVar()
+        self.cantidad = IntVar()
+        self.inicio = StringVar()
+        self.fin = StringVar()
 
         #====================================Variables===========================================================
 
@@ -60,28 +64,28 @@ class Ventana6:
         self.space = Label(self.spaceF)
         self.space.grid(row= 0, column=0)
 
-        self.datoOp = Label(self.createUsuarioL, text='Usuario: ')
+        self.datoOp = Label(self.createUsuarioL, text='Cereal: ')
         self.datoOp.grid(row= 0, column=0)
 
-        self.usuario = Entry(self.createUsuarioE, textvariable=self.user)
+        self.usuario = Entry(self.createUsuarioE, textvariable=self.cereal)
         self.usuario.grid(row= 0, column=0)
 
-        self.datoOp = Label(self.createPassL, text='Contraseña: ')
+        self.datoOp = Label(self.createPassL, text='Cantidad: ')
         self.datoOp.grid(row= 0, column=0)
 
-        self.password = Entry(self.createPassE, textvariable=self.password, show='*')
+        self.password = Entry(self.createPassE, textvariable=self.cantidad)
         self.password.grid(row= 0, column=0)
 
-        self.datoOp = Label(self.createNameL, text='Nombre: ')
+        self.datoOp = Label(self.createNameL, text='Fecha Inicio (ej: Diciembre 2019): ')
         self.datoOp.grid(row= 0, column=0)
 
-        self.name = Entry(self.createNameE, textvariable=self.name)
+        self.name = Entry(self.createNameE, textvariable=self.inicio)
         self.name.grid(row= 0, column=0)
 
-        self.datoOp = Label(self.createSurnameL, text='Apellido: ')
+        self.datoOp = Label(self.createSurnameL, text='Fecha fin (ej: Diciembre 2019): ')
         self.datoOp.grid(row= 0, column=0)
 
-        self.apellido = Entry(self.createSurnameE, textvariable=self.surname)
+        self.apellido = Entry(self.createSurnameE, textvariable=self.fin)
         self.apellido.grid(row= 0, column=0)
 
         self.space = Label(self.spaceF)
@@ -97,4 +101,5 @@ class Ventana6:
         #=====================================Etiquetas==========================================================
 
     def agregarCosecha(self):
-        pass
+        a = CosechaController()
+        a.createCocecha(1, self.cereal.get(), self.cantidad.get(), self.inicio.get(), self.fin.get(), self.user)
