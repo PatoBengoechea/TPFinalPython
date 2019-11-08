@@ -6,7 +6,8 @@ class CosechaController:
 
     def createCocecha(self, id, cereal, cantidad, inicio, fin, productor ):
         dbCosecha = CosechaData()
-        nuevaCosecha = Cosecha(id, cereal, cantidad, inicio, fin, productor)
+        emptyArray = [] #pruebaJuanchi
+        nuevaCosecha = Cosecha(id, cereal, cantidad, cantidad, inicio, fin, productor, emptyArray)
         response = dbCosecha.addCosecha(nuevaCosecha)
         if(response):
             return nuevaCosecha

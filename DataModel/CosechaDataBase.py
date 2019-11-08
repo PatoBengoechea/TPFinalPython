@@ -23,7 +23,7 @@ class CosechaData:
                     v.cantidad = ven["cantidad"]
                     v.monto = ven["monto"]
                     ventas.append(v)
-                nc = Cosecha(i["cereal"], i["cantidadProduccion"], i["cantidadParcial"], i["inicio"], i["fin"], i["productor"], ventas)
+                nc = Cosecha(id, i["cereal"], i["cantidadProduccion"], i["cantidadParcial"], i["inicio"], i["fin"], i["productor"], ventas)
                 nc.id = id
                 productorJSON = cursor.usuario.find_one({"user": productor})
                 productorObject = User()
@@ -40,13 +40,15 @@ class CosechaData:
         db = Database()
         cursor = db.main()
         newCosecha = {
+            'id': cosecha.id,
             'cereal' : cosecha.cereal,
             'cantidadProduccion' : cosecha.cantidadProduccion,
-            'cantidadParcial' : cosecha.cantidadParcial,
+            'cantidadParcial' : cosecha.cantidadProduccion,
             'inicio' : cosecha.inicio,
             'fin' : cosecha.fin,
-            'productor' : cosecha.productor.user
+            'productor' : cosecha.productor
         }
+        print(newCosecha)
         try:
             cursor.cosecha.insert_one(newCosecha)
             print("OK")

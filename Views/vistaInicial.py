@@ -151,7 +151,7 @@ class Ventana3:
 
         ubBot = 1
 
-        self.btnOperaciones = Button(self.botones, text='Agregar Cosecha', background= 'aquamarine', command = "")
+        self.btnOperaciones = Button(self.botones, text='Agregar Cosecha', background= 'aquamarine', command = lambda: self.agregarCosecha())
         self.btnOperaciones.grid(row=1, column= ubBot)
 
         ubBot = ubBot + 1
@@ -214,7 +214,12 @@ class Ventana3:
     def new_window2(self):
         # t es un parametro de tipo que me permite conocer por que metodo se solicito la nueva ventana
         self.newWindow = Toplevel(self.master)
-        self.app = Ventana6(self.newWindow, self.user)
+        self.app = Ventana6(self.newWindow, self, self.user)
+        print('esto es 2',self.app)
+
+    def agregarCosecha(self):
+        self.new_window2()
+
 
 
 

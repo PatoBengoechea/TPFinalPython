@@ -5,13 +5,14 @@ from Controller.CosechaControler import CosechaController
 
 class Ventana6:
 
-    def __init__(self, master, user):
+    def __init__(self, master, ori, user):
         self.master = master
         self.master.title('Panel Principal')
-        self.master.geometry('1400x500+0+0')
+        self.master.geometry('700x300+0+0')
         self.frame = Frame(self.master)
         self.frame.pack()
 
+        self.vPadre = ori
         self.user = user
 
         self.cereal = StringVar()
@@ -102,4 +103,15 @@ class Ventana6:
 
     def agregarCosecha(self):
         a = CosechaController()
-        a.createCocecha(1, self.cereal.get(), self.cantidad.get(), self.inicio.get(), self.fin.get(), self.user)
+        #ver de agregar id con last object como propiedad del objeto, para pasar como primer parametro
+        #Por el momento Hard code
+        response = a.createCocecha(3 ,self.cereal.get(), self.cantidad.get(), self.inicio.get(), self.fin.get(), self.user)
+
+        if response != None:
+            self.respuestaL = Label(self.respuesta, text='Cosecha Agregada Exitosamente', background= 'pale green')
+            self.respuestaL.grid(row= 0, column=0)
+            self.vPadre.listar()
+        else:
+            self.respuestaL = Label(self.respuesta, text='Error', background= 'orange red')
+            self.respuestaL.grid(row= 0, column=0)
+
