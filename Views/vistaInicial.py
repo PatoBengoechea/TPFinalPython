@@ -2,7 +2,9 @@ from tkinter import ttk
 from tkinter import *
 
 from Controller.prueba import armarListadoDeTrades #borrar
-from Controller.CosechaController import CosechaController
+from Controller.CocechaController import CosechaController
+
+from Controller.controladorPrecios import controladorPrecios
 
 from Views.vistaOp import Ventana5
 
@@ -21,9 +23,11 @@ class Ventana3:
         self.surname = surname
 
         self.cosechasControlador = CosechaController()
+
         self.cosechas = self.cosechasControlador.getCocecha(self.user)
 
-        self.precio = self.buscarMejorPrecio()
+        if(self.cosechas != None):
+            self.precio = self.buscarMejorPrecio(self.cosechas[0])
 
         self.mercado = 'DODic19' #borrar
         self.trades = armarListadoDeTrades(self.mercado) #borrar
@@ -103,6 +107,7 @@ class Ventana3:
         self.tv.column("two", width=anchoCol)
         self.tv.column("three", width=anchoCol)
         self.tv.column("four", width=anchoCol)
+        self.tv.column("five", width=anchoCol)
 
 
         #====================================TVHeadings===========================================================
@@ -159,8 +164,10 @@ class Ventana3:
 
         print(self.cosechas)
 
-        for cosecha in self.cosechas:
-            self.tv.insert("" , 0, values=(cosecha.cereal, cosecha.cantidadProduccion, cosecha.inicio, cosecha.fin))
+        if(self.cosechas != None):
+            for cosecha in self.cosechas:
+                precio = self.buscarMejorPrecio(cosecha)
+                self.tv.insert("" , 0, values=(cosecha.cereal, cosecha.cantidadProduccion, cosecha.inicio, cosecha.fin, precio['precio']))
 
         self.tv.pack()
 
@@ -171,6 +178,14 @@ class Ventana3:
 
     def verCotizaciones(self):
         self.new_window()
+
+    def buscarMejorPrecio(self, cosecha):
+        a = controladorPrecios(cosecha)
+        a.main()
+
+
+
+
 
 
 
