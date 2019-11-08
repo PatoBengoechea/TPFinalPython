@@ -2,7 +2,7 @@ from tkinter import ttk
 from tkinter import *
 
 from Controller.prueba import armarListadoDeTrades #borrar
-from Controller.CocechaController import CosechaController
+from Controller.CosechaControler import CosechaController
 
 from Controller.controladorPrecios import controladorPrecios
 
@@ -25,9 +25,6 @@ class Ventana3:
         self.cosechasControlador = CosechaController()
 
         self.cosechas = self.cosechasControlador.getCocecha(self.user)
-
-        if(self.cosechas != None):
-            self.precio = self.buscarMejorPrecio(self.cosechas[0])
 
         self.mercado = 'DODic19' #borrar
         self.trades = armarListadoDeTrades(self.mercado) #borrar
@@ -94,7 +91,7 @@ class Ventana3:
         self.tv = ttk.Treeview(self.tvw)
         self.tv['show'] = 'headings'
 
-        self.tv["columns"]=("one","two","three","four")
+        self.tv["columns"]=("one","two","three","four","five")
         #reveer
         vsb = ttk.Scrollbar(self.tvw2, orient="vertical", command=self.tv.yview)
         #vsb.place(x=30+455+2, y=20, height=200)
@@ -115,6 +112,7 @@ class Ventana3:
         self.tv.heading("two", text="Cantidad")
         self.tv.heading("three", text="Inicio")
         self.tv.heading("four", text="Fin")
+        self.tv.heading("four", text="Cotizacion")
 
 
         #===============================Prueba de insertar datos================================================
@@ -166,7 +164,7 @@ class Ventana3:
 
         if(self.cosechas != None):
             for cosecha in self.cosechas:
-                precio = self.buscarMejorPrecio(cosecha)
+                precio = self.buscarMejorPrecio(cosecha.cereal)
                 self.tv.insert("" , 0, values=(cosecha.cereal, cosecha.cantidadProduccion, cosecha.inicio, cosecha.fin, precio['precio']))
 
         self.tv.pack()
@@ -181,7 +179,7 @@ class Ventana3:
 
     def buscarMejorPrecio(self, cosecha):
         a = controladorPrecios(cosecha)
-        a.main()
+
 
 
 

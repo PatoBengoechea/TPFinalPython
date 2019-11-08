@@ -22,7 +22,3 @@ class CosechaController:
         else:
             return None
 
-#borrar all
-a = CosechaController()
-b = a.getCocecha('juunchy')
-print(b[0].cereal)
