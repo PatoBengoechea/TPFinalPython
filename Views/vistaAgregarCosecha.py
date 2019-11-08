@@ -110,8 +110,9 @@ class Ventana6:
         if response != None:
             self.respuestaL = Label(self.respuesta, text='Cosecha Agregada Exitosamente', background= 'pale green')
             self.respuestaL.grid(row= 0, column=0)
-            self.vPadre.listar()
+
         else:
             self.respuestaL = Label(self.respuesta, text='Error', background= 'orange red')
             self.respuestaL.grid(row= 0, column=0)
 
+        self.vPadre.listar()

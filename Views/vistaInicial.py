@@ -181,8 +181,9 @@ class Ventana3:
 
     def listar(self):
 
-
         self.tv.delete(*self.tv.get_children())
+
+        self.cosechas = self.cosechasControlador.getCocecha(self.user)
 
         print(self.cosechas)
 
