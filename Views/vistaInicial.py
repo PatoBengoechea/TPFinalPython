@@ -8,6 +8,7 @@ from Controller.controladorPrecios import controladorPrecios
 
 from Views.vistaOp import Ventana5
 from Views.vistaAgregarCosecha import Ventana6
+from Views.vistaVentaCosecha import Ventana7
 
 class Ventana3:
 
@@ -87,7 +88,7 @@ class Ventana3:
         #======================================Labels and Entries=================================================================
         self.datoOp = Label(self.UsuarioL, text=(self.name + ' ' + self.surname), background= 'pale green')
         self.datoOp.grid(row= 0, column=0)
-        self.datoOp.config(font=("Verdana", 10))
+        self.datoOp.config(font=("Courier", 10))
 
 
         self.space = Label(self.spaceF)
@@ -96,7 +97,7 @@ class Ventana3:
         self.titleLista = Label(self.frameEtiquetaLista, text="Listado de Cosechas", background= 'deep sky blue')
         self.titleLista.grid(row= 0, column=0)
 
-        self.titleLista.config(font=("Verdana", 14))
+        self.titleLista.config(font=("Courier", 14))
 
 
 
@@ -104,7 +105,7 @@ class Ventana3:
         self.tv = ttk.Treeview(self.tvw)
         self.tv['show'] = 'headings'
 
-        self.tv["columns"]=("one","two","three","four","five", "six")
+        self.tv["columns"]=("one","two","three","four","five", "six","seven")
         #reveer
         vsb = ttk.Scrollbar(self.tvw2, orient="vertical", command=self.tv.yview)
         #vsb.place(x=30+455+2, y=20, height=200)
@@ -113,21 +114,23 @@ class Ventana3:
         #====================================TVColums==============================================================
         anchoCol = 150
 
-        self.tv.column("one", width=anchoCol)
+        self.tv.column("one", width=0)
         self.tv.column("two", width=anchoCol)
         self.tv.column("three", width=anchoCol)
         self.tv.column("four", width=anchoCol)
         self.tv.column("five", width=anchoCol)
         self.tv.column("six", width=anchoCol)
+        self.tv.column("seven", width=anchoCol)
 
 
         #====================================TVHeadings===========================================================
-        self.tv.heading("one", text="Cereal")
-        self.tv.heading("two", text="Cantidad")
-        self.tv.heading("three", text="Inicio")
-        self.tv.heading("four", text="Fin")
-        self.tv.heading("five", text="Mejor Cotizacion")
-        self.tv.heading("six", text="Cosecha Valorizada")
+        self.tv.heading("one", text="id")
+        self.tv.heading("two", text="Cereal")
+        self.tv.heading("three", text="Cantidad")
+        self.tv.heading("four", text="Inicio")
+        self.tv.heading("five", text="Fin")
+        self.tv.heading("six", text="Mejor Cotizacion")
+        self.tv.heading("seven", text="Cosecha Valorizada")
 
 
         #===============================Prueba de insertar datos================================================
@@ -138,6 +141,7 @@ class Ventana3:
         self.frame = Frame(self.master, bg='gray')
         self.frame.pack()
 
+        self.tv.bind('<ButtonRelease-1>', self.selectItem)
 
         #+++++++++++++++++++++++++++++++++++++Totales++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -163,13 +167,23 @@ class Ventana3:
 
         ubBot = ubBot + 1
 
-        self.btnCocechas = Button(self.botones, text='Ver Cotizaciones', background= 'medium aquamarine', command = lambda: self.verCotizaciones())
-        self.btnCocechas.grid(row=1, column= ubBot)
+        self.btnVender = Button(self.botones, text='Vender', background= 'DeepSkyBlue2', command = lambda: self.venderCosecha())
+        self.btnVender.grid(row=1, column= ubBot)
 
         ubBot = ubBot + 1
 
         self.spaceBtn2 = Label(self.botones)
         self.spaceBtn2.grid(row= 1, column= ubBot)
+
+        ubBot = ubBot + 1
+
+        self.btnCocechas = Button(self.botones, text='Ver Cotizaciones', background= 'medium aquamarine', command = lambda: self.verCotizaciones())
+        self.btnCocechas.grid(row=1, column= ubBot)
+
+        ubBot = ubBot + 1
+
+        self.spaceBtn3 = Label(self.botones)
+        self.spaceBtn3.grid(row= 1, column= ubBot)
 
         ubBot = ubBot + 1
 
@@ -195,25 +209,23 @@ class Ventana3:
                         if state:
                             if cosecha.cereal[:3].upper() == p['simbolo'][:3]:
                                 valoreCosecha = cosecha.cantidadProduccion * p['precio']
-                                self.tv.insert("" , 0, values=(cosecha.cereal, cosecha.cantidadProduccion, cosecha.inicio, cosecha.fin, p['precio'], valoreCosecha ))
+                                self.tv.insert("" , 0, values=(cosecha.id, cosecha.cereal, cosecha.cantidadProduccion, cosecha.inicio, cosecha.fin, p['precio'], valoreCosecha ))
                                 self.acTotales = self.acTotales + valoreCosecha
                                 state = False
                             else:
-                                print('cosecha', cosecha.cereal)
                                 precio = self.buscarMejorPrecio(cosecha.cereal)
                                 self.preciosDefinidos.append(precio)
                                 valoreCosecha = cosecha.cantidadProduccion * precio['precio']
-                                self.tv.insert("" , 0, values=(cosecha.cereal, cosecha.cantidadProduccion, cosecha.inicio, cosecha.fin, precio['precio'], valoreCosecha ))
+                                self.tv.insert("" , 0, values=(cosecha.id, cosecha.cereal, cosecha.cantidadProduccion, cosecha.inicio, cosecha.fin, precio['precio'], valoreCosecha ))
                                 self.acTotales = self.acTotales + valoreCosecha
                                 state = False
                         else:
                             pass
                 else:
-                            print('cosecha', cosecha.cereal)
                             precio = self.buscarMejorPrecio(cosecha.cereal)
                             self.preciosDefinidos.append(precio)
                             valoreCosecha = cosecha.cantidadProduccion * precio['precio']
-                            self.tv.insert("" , 0, values=(cosecha.cereal, cosecha.cantidadProduccion, cosecha.inicio, cosecha.fin, precio['precio'], valoreCosecha ))
+                            self.tv.insert("" , 0, values=(cosecha.id, cosecha.cereal, cosecha.cantidadProduccion, cosecha.inicio, cosecha.fin, precio['precio'], valoreCosecha ))
                             self.acTotales = self.acTotales + valoreCosecha
 
         print('Mejores precios', self.preciosDefinidos)
@@ -232,8 +244,6 @@ class Ventana3:
         rta = a.definirMejor()
         return rta
 
-
-
     def new_window2(self):
         # t es un parametro de tipo que me permite conocer por que metodo se solicito la nueva ventana
         self.newWindow = Toplevel(self.master)
@@ -243,8 +253,19 @@ class Ventana3:
     def agregarCosecha(self):
         self.new_window2()
 
+    def selectItem(self, a):
+        curItem = self.tv.focus()
+        item = self.tv.item(curItem)
+        self.itemAc = item['values']
+        print(self.itemAc)
 
+    def new_window3(self):
+        # t es un parametro de tipo que me permite conocer por que metodo se solicito la nueva ventana
+        self.newWindow = Toplevel(self.master)
+        self.app = Ventana7(self.newWindow, self)
 
+    def venderCosecha(self):
+        self.new_window3()
 
 
 

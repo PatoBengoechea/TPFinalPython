@@ -7,6 +7,7 @@ from tkinter import messagebox
 from Views.vistaNuevoUsuario import Ventana2
 from Views.vistaInicial import Ventana3
 
+
 def main():
 
     root = Tk()
@@ -154,7 +155,5 @@ class Ventana1:
 
     def nuevoUsuario(self):
         self.new_window()
-
-
 
 main()
