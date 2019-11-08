@@ -24,17 +24,16 @@ class controladorPrecios:
         self.definirMejor()
 
     def definirMejor(self):
-        max = {'precio': 0, 'simbolo':""}
+        max = {'precio': 1, 'simbolo':""}
         instrumentos = self.buscarInstrumentos()
         for t in instrumentos:
-            a = self.armarTrades(t)
-            b = a['trades']
-            if(b != []):
-                if(b[-1]['price'] > max['precio']):
-                    max['precio'] = b[-1]['price']
-                    max['simbolo'] = t
-        print('el maximo es ', max)
-        return max['precio']
+            if t['precio'] > max['precio']:
+                max['precio'] = t['precio']
+                max['simbolo'] = t['nombre']
+        print('este es el precio maximo', max['precio'])
+        aux = max['precio']
+        asd = str(aux)
+        return asd
 
 
     def buscarInstrumentos(self):
@@ -47,9 +46,20 @@ class controladorPrecios:
         array = []
         p = {"precio":0, "nombre": ""}
         for i in b:
-            if i['instrumentId']['symbol'][:3] == self.simbolo:
-                print(i['instrumentId']['symbol'])
-                array.append(i['instrumentId']['symbol'])
+            t = i['instrumentId']['symbol']
+            if (t[:3] == self.simbolo) and (len(t) <= 12):
+
+                print(t)
+                a = self.armarTrades(t)
+                b = a['trades']
+                if(b != []):
+                    p['precio'] = b[-1]['price']
+                    print(p['precio'])
+
+                p['nombre'] = i['instrumentId']['symbol']
+
+                array.append(p)
+                print(array)
 
         return array
 

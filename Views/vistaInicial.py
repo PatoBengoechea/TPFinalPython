@@ -112,7 +112,7 @@ class Ventana3:
         self.tv.heading("two", text="Cantidad")
         self.tv.heading("three", text="Inicio")
         self.tv.heading("four", text="Fin")
-        self.tv.heading("four", text="Cotizacion")
+        self.tv.heading("five", text="Cotizacion")
 
 
         #===============================Prueba de insertar datos================================================
@@ -164,8 +164,7 @@ class Ventana3:
 
         if(self.cosechas != None):
             for cosecha in self.cosechas:
-                precio = self.buscarMejorPrecio(cosecha.cereal)
-                self.tv.insert("" , 0, values=(cosecha.cereal, cosecha.cantidadProduccion, cosecha.inicio, cosecha.fin, precio))
+                self.tv.insert("" , 0, values=(cosecha.cereal, cosecha.cantidadProduccion, cosecha.inicio, cosecha.fin, self.buscarMejorPrecio(cosecha.cereal)))
 
         self.tv.pack()
 
