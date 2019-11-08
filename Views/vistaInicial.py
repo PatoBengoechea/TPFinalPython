@@ -2,7 +2,7 @@ from tkinter import ttk
 from tkinter import *
 
 from Controller.prueba import armarListadoDeTrades #borrar
-from Controller.CocechaController import CosechaController
+from Controller.CosechaController import CosechaController
 
 from Views.vistaOp import Ventana5
 

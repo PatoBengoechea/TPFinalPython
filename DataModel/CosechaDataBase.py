@@ -3,6 +3,8 @@ from Model.Cosecha import Cosecha
 from Model.User import User
 from Model.Venta import Venta
 from bson import ObjectId
+from datetime import date
+
 
 class CosechaData:
     def getCosechas(self, productor):
@@ -21,7 +23,8 @@ class CosechaData:
                     v.cantidad = ven["cantidad"]
                     v.monto = ven["monto"]
                     ventas.append(v)
-                nc = Cosecha(i["cereal"], i["cantidadProduccion"], i["inicio"], i["fin"], i["productor"], ventas)
+                nc = Cosecha(i["cereal"], i["cantidadProduccion"], i["cantidadParcial"], i["inicio"], i["fin"], i["productor"], ventas)
+                nc.id = id
                 productorJSON = cursor.usuario.find_one({"user": productor})
                 productorObject = User()
                 productorObject.parse(productorJSON)
@@ -39,6 +42,7 @@ class CosechaData:
         newCosecha = {
             'cereal' : cosecha.cereal,
             'cantidadProduccion' : cosecha.cantidadProduccion,
+            'cantidadParcial' : cosecha.cantidadParcial,
             'inicio' : cosecha.inicio,
             'fin' : cosecha.fin,
             'productor' : cosecha.productor.user
@@ -50,5 +54,4 @@ class CosechaData:
         except:
             print("wrong")
             return False
-
 
