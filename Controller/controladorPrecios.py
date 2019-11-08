@@ -34,7 +34,7 @@ class controladorPrecios:
                     max['precio'] = b[-1]['price']
                     max['simbolo'] = t
         print('el maximo es ', max)
-        return max
+        return max['precio']
 
 
     def buscarInstrumentos(self):
@@ -45,6 +45,7 @@ class controladorPrecios:
 
         print(b)
         array = []
+        p = {"precio":0, "nombre": ""}
         for i in b:
             if i['instrumentId']['symbol'][:3] == self.simbolo:
                 print(i['instrumentId']['symbol'])

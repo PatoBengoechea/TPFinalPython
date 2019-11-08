@@ -165,7 +165,7 @@ class Ventana3:
         if(self.cosechas != None):
             for cosecha in self.cosechas:
                 precio = self.buscarMejorPrecio(cosecha.cereal)
-                self.tv.insert("" , 0, values=(cosecha.cereal, cosecha.cantidadProduccion, cosecha.inicio, cosecha.fin, precio['precio']))
+                self.tv.insert("" , 0, values=(cosecha.cereal, cosecha.cantidadProduccion, cosecha.inicio, cosecha.fin, precio))
 
         self.tv.pack()
 
