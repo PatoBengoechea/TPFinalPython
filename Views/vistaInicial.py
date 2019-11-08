@@ -14,7 +14,7 @@ class Ventana3:
 
         self.master = master
         self.master.title('Panel Principal')
-        self.master.geometry('1200x500+0+0')
+        self.master.geometry('1400x500+0+0')
         self.frame = Frame(self.master)
         self.frame.pack()
 
@@ -22,12 +22,11 @@ class Ventana3:
         self.name = name
         self.surname = surname
 
+        self.acTotales = 0
+
         self.cosechasControlador = CosechaController()
 
         self.cosechas = self.cosechasControlador.getCocecha(self.user)
-
-        self.mercado = 'DODic19' #borrar
-        self.trades = armarListadoDeTrades(self.mercado) #borrar
 
 
         #=====================================Frames================================================================
@@ -71,6 +70,16 @@ class Ventana3:
 
         ubF = ubF + 1
 
+        self.frameEtiquetaTotal = Frame(self.frame, width= 300, height= 50)
+        self.frameEtiquetaTotal.grid(row=ubF, column=0)
+
+        ubF = ubF + 1
+
+        self.spaceF3 = Frame(self.frame, width= 300, height= 50)
+        self.spaceF3.grid(row=ubF, column=0)
+
+        ubF = ubF + 1
+
         self.botones = Frame(self.frame, width= 300, height = 50, relief='ridge', bd= 2)
         self.botones.grid(row=ubF, column=1)
 
@@ -87,11 +96,12 @@ class Ventana3:
         self.titleLista.grid(row= 0, column=0)
 
 
+
         #=====================================Treeview===========================================================
         self.tv = ttk.Treeview(self.tvw)
         self.tv['show'] = 'headings'
 
-        self.tv["columns"]=("one","two","three","four","five")
+        self.tv["columns"]=("one","two","three","four","five", "six")
         #reveer
         vsb = ttk.Scrollbar(self.tvw2, orient="vertical", command=self.tv.yview)
         #vsb.place(x=30+455+2, y=20, height=200)
@@ -105,6 +115,7 @@ class Ventana3:
         self.tv.column("three", width=anchoCol)
         self.tv.column("four", width=anchoCol)
         self.tv.column("five", width=anchoCol)
+        self.tv.column("six", width=anchoCol)
 
 
         #====================================TVHeadings===========================================================
@@ -112,7 +123,8 @@ class Ventana3:
         self.tv.heading("two", text="Cantidad")
         self.tv.heading("three", text="Inicio")
         self.tv.heading("four", text="Fin")
-        self.tv.heading("five", text="Cotizacion")
+        self.tv.heading("five", text="Mejor Cotizacion")
+        self.tv.heading("six", text="Cosecha Valorizada")
 
 
         #===============================Prueba de insertar datos================================================
@@ -122,6 +134,17 @@ class Ventana3:
 
         self.frame = Frame(self.master, bg='gray')
         self.frame.pack()
+
+
+        #+++++++++++++++++++++++++++++++++++++Totales++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        self.space = Label(self.spaceF3)
+        self.space.grid(row= 0, column=0)
+
+        self.etTotal = Label(self.frameEtiquetaTotal, text="Valor Total de cosechas: $"+ str(self.acTotales))
+        self.etTotal.grid(row= 0, column=0)
+
+
 
         #===========================================Botones============================================================
 
@@ -164,8 +187,12 @@ class Ventana3:
 
         if(self.cosechas != None):
             for cosecha in self.cosechas:
-                self.tv.insert("" , 0, values=(cosecha.cereal, cosecha.cantidadProduccion, cosecha.inicio, cosecha.fin, self.buscarMejorPrecio(cosecha.cereal)))
-
+                precio = self.buscarMejorPrecio(cosecha.cereal)
+                print(precio)
+                print(type(precio))
+                valoreCosecha = cosecha.cantidadProduccion * precio
+                self.tv.insert("" , 0, values=(cosecha.cereal, cosecha.cantidadProduccion, cosecha.inicio, cosecha.fin, precio, valoreCosecha ))
+                self.acTotales = self.acTotales + valoreCosecha
         self.tv.pack()
 
     def new_window(self):
@@ -178,10 +205,15 @@ class Ventana3:
 
     def buscarMejorPrecio(self, cosecha):
         a = controladorPrecios(cosecha)
+        rta = a.definirMejor()
+        return rta
 
 
 
-
+    def new_window2(self):
+        # t es un parametro de tipo que me permite conocer por que metodo se solicito la nueva ventana
+        self.newWindow = Toplevel(self.master)
+        self.app = Ventana5(self.newWindow)
 
 
 

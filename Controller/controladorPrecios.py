@@ -20,8 +20,6 @@ class controladorPrecios:
                environment=pyRofex.Environment.REMARKET)
 
         self.simbolo = simbolo[:3].upper()
-        print(self.simbolo)
-        self.definirMejor()
 
     def definirMejor(self):
         max = {'precio': 1, 'simbolo':""}
@@ -31,9 +29,8 @@ class controladorPrecios:
                 max['precio'] = t['precio']
                 max['simbolo'] = t['nombre']
         print('este es el precio maximo', max['precio'])
-        aux = max['precio']
-        asd = str(aux)
-        return asd
+        return max['precio']
+
 
 
     def buscarInstrumentos(self):

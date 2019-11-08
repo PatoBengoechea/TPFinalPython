@@ -110,9 +110,6 @@ class Ventana5:
 
         self.master.mainloop()
 
-    def showDetails(self):
-        self.new_window()
-
     def listar(self):
 
         self.tv.delete(*self.tv.get_children())
@@ -129,10 +126,6 @@ class Ventana5:
         item = self.tv.item(curItem)
         self.itemAc = item['values']
 
-    def new_window(self):
-        # t es un parametro de tipo que me permite conocer por que metodo se solicito la nueva ventana
-        self.newWindow = Toplevel(self.master)
-        self.app = Ventana2(self.newWindow, self.itemAc, self.trades)
 
     def plot(self, t):
         l = pd.DataFrame(t['trades'])[['price','datetime']]

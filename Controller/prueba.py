@@ -65,8 +65,8 @@ def getListaSimbolos():
 
 def armarListadoDeTrades(a):
     trades = pyRofex.get_trade_history(ticker=a,
-                                       start_date='2019-08-01',
-                                       end_date='2019-10-17')
+                                       start_date='2019-10-01',
+                                       end_date='2019-11-07')
 
     return trades
 
