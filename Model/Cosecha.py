@@ -9,4 +9,3 @@ class Cosecha:
         self.fin = fin
         self.productor = productor
         self.ventas = ventas
-

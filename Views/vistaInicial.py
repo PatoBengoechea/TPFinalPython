@@ -27,7 +27,6 @@ class Ventana3:
 
         self.cosechasControlador = CosechaController()
 
-        self.cosechas = self.cosechasControlador.getCocecha(self.user)
 
 
         #=====================================Frames================================================================
@@ -88,6 +87,7 @@ class Ventana3:
         #======================================Labels and Entries=================================================================
         self.datoOp = Label(self.UsuarioL, text=(self.name + ' ' + self.surname), background= 'pale green')
         self.datoOp.grid(row= 0, column=0)
+        self.datoOp.config(font=("Verdana", 10))
 
 
         self.space = Label(self.spaceF)
@@ -95,6 +95,8 @@ class Ventana3:
 
         self.titleLista = Label(self.frameEtiquetaLista, text="Listado de Cosechas", background= 'deep sky blue')
         self.titleLista.grid(row= 0, column=0)
+
+        self.titleLista.config(font=("Verdana", 14))
 
 
 
@@ -182,19 +184,39 @@ class Ventana3:
     def listar(self):
 
         self.tv.delete(*self.tv.get_children())
-
         self.cosechas = self.cosechasControlador.getCocecha(self.user)
-
-        print(self.cosechas)
+        self.preciosDefinidos =[]
 
         if(self.cosechas != None):
             for cosecha in self.cosechas:
-                precio = self.buscarMejorPrecio(cosecha.cereal)
-                print(precio)
-                print(type(precio))
-                valoreCosecha = cosecha.cantidadProduccion * precio
-                self.tv.insert("" , 0, values=(cosecha.cereal, cosecha.cantidadProduccion, cosecha.inicio, cosecha.fin, precio, valoreCosecha ))
-                self.acTotales = self.acTotales + valoreCosecha
+                if self.preciosDefinidos != []:
+                    state = True
+                    for p in self.preciosDefinidos:
+                        if state:
+                            if cosecha.cereal[:3].upper() == p['simbolo'][:3]:
+                                valoreCosecha = cosecha.cantidadProduccion * p['precio']
+                                self.tv.insert("" , 0, values=(cosecha.cereal, cosecha.cantidadProduccion, cosecha.inicio, cosecha.fin, p['precio'], valoreCosecha ))
+                                self.acTotales = self.acTotales + valoreCosecha
+                                state = False
+                            else:
+                                print('cosecha', cosecha.cereal)
+                                precio = self.buscarMejorPrecio(cosecha.cereal)
+                                self.preciosDefinidos.append(precio)
+                                valoreCosecha = cosecha.cantidadProduccion * precio['precio']
+                                self.tv.insert("" , 0, values=(cosecha.cereal, cosecha.cantidadProduccion, cosecha.inicio, cosecha.fin, precio['precio'], valoreCosecha ))
+                                self.acTotales = self.acTotales + valoreCosecha
+                                state = False
+                        else:
+                            pass
+                else:
+                            print('cosecha', cosecha.cereal)
+                            precio = self.buscarMejorPrecio(cosecha.cereal)
+                            self.preciosDefinidos.append(precio)
+                            valoreCosecha = cosecha.cantidadProduccion * precio['precio']
+                            self.tv.insert("" , 0, values=(cosecha.cereal, cosecha.cantidadProduccion, cosecha.inicio, cosecha.fin, precio['precio'], valoreCosecha ))
+                            self.acTotales = self.acTotales + valoreCosecha
+
+        print('Mejores precios', self.preciosDefinidos)
         self.tv.pack()
 
     def new_window(self):

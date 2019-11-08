@@ -57,3 +57,17 @@ class CosechaData:
             print("wrong")
             return False
 
+    def getLast(self):
+        db = Database()
+        cursor = db.main()
+        r =cursor.cosecha.find()
+        return r
+
+#borrar
+a = CosechaData()
+b = a.getLast()
+array = []
+for i in b:
+    array.append(i)
+print(array[-1]['id'])
+

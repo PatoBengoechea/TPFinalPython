@@ -105,7 +105,8 @@ class Ventana6:
         a = CosechaController()
         #ver de agregar id con last object como propiedad del objeto, para pasar como primer parametro
         #Por el momento Hard code
-        response = a.createCocecha(3 ,self.cereal.get(), self.cantidad.get(), self.inicio.get(), self.fin.get(), self.user)
+
+        response = a.createCocecha(a.idSetter() ,self.cereal.get(), self.cantidad.get(), self.inicio.get(), self.fin.get(), self.user)
 
         if response != None:
             self.respuestaL = Label(self.respuesta, text='Cosecha Agregada Exitosamente', background= 'pale green')

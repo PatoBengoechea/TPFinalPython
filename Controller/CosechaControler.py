@@ -18,8 +18,18 @@ class CosechaController:
     def getCocecha(self, productorActual):
         dbCosecha = CosechaData()
         cosechas = dbCosecha.getCosechas(productorActual)
+        ultima = dbCosecha.getLast()
+        print('La ultima cosecha', ultima)
         if(cosechas != None):
             return cosechas
         else:
             return None
 
+    def idSetter(self):
+        a = CosechaData()
+        b = a.getLast()
+        array = []
+        for i in b:
+            array.append(i)
+        id = array[-1]['id'] + 1
+        return id

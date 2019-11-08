@@ -28,8 +28,7 @@ class controladorPrecios:
             if t['precio'] > max['precio']:
                 max['precio'] = t['precio']
                 max['simbolo'] = t['nombre']
-        print('este es el precio maximo', max['precio'])
-        return max['precio']
+        return max
 
 
 
