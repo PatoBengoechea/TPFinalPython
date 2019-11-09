@@ -12,7 +12,7 @@ class Ventana7:
 
         self.master = master
         self.master.title('Panel Principal')
-        self.master.geometry('700x500+0+0')
+        self.master.geometry('700x300+0+0')
         self.frame = Frame(self.master)
         self.frame.pack()
 
@@ -20,7 +20,7 @@ class Ventana7:
 
         self.idCosecha = v3.itemAc[0]
         self.cereal = v3.itemAc[1]
-        self.precio = v3.itemAc[5]
+        self.precio = v3.itemAc[6]
 
         self.cantidad = IntVar()
 
@@ -97,4 +97,14 @@ class Ventana7:
 
     def venderCosecha(self):
         a = VentasController()
-        print(a.addVenta(self.idCosecha, self.precio, self.cantidad.get()))
+        resp = a.addVenta(self.idCosecha, float(self.precio), int(self.cantidad.get()))
+        if resp:
+            self.respuestaE = Label(self.respuesta, text='Venta ingresada', background='pale green')
+            self.respuestaE.grid(row= 0, column=0)
+            self.v3.listar2()
+        else:
+            self.respuestaE = Label(self.respuesta, text='Error al igresar la venta', background='coral')
+            self.respuestaE.grid(row= 0, column=0)
+
+
+

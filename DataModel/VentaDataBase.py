@@ -16,9 +16,9 @@ class VentaDataBase:
             #cursor.cosecha.update_one({'_id': cosecha}, {"$inc":{"cantidadParcial": -monto}})
             newVenta = {
                 'cosecha': cosecha,
-                'fecha' : date.today().strftime("%m/%d/%y"),
-                'cantidad' : cantidad,
-                'monto' : monto
+                'fecha': date.today().strftime("%m/%d/%y"),
+                'cantidad': cantidad,
+                'monto': monto
             }
             cursor.ventas.insert_one(newVenta)
             print('Venta Agregada')

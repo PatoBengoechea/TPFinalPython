@@ -17,7 +17,7 @@ class Ventana3:
 
         self.master = master
         self.master.title('Panel Principal')
-        self.master.geometry('1600x1000+0+0')
+        self.master.geometry('2000x700+0+0')
         self.frame = Frame(self.master)
         self.frame.pack()
 
@@ -53,6 +53,10 @@ class Ventana3:
         self.frameEtiquetaLista = Frame(self.frame, width= 300, height= 50)
         self.frameEtiquetaLista.grid(row=ubF, column=0)
 
+
+        self.frameEtiquetaLista2 = Frame(self.frame, width= 300, height= 50)
+        self.frameEtiquetaLista2.grid(row=ubF, column=2)
+
         ubF = ubF + 1
 
         self.spaceF = Frame(self.frame, width= 300, height= 50)
@@ -63,8 +67,12 @@ class Ventana3:
         self.tvw = Frame(self.frame, width= 300, height= 50)
         self.tvw.grid(row=ubF, column=0)
 
+
+        self.tvwSpace = Frame(self.frame, width= 300, height= 50)
+        self.tvwSpace.grid(row=ubF, column=1)
+
         self.tvw2 = Frame(self.frame, width= 300, height= 50) #test
-        self.tvw2.grid(row=ubF, column=1)
+        self.tvw2.grid(row=ubF, column=2)
 
         ubF = ubF + 1
 
@@ -76,6 +84,9 @@ class Ventana3:
         self.frameEtiquetaTotal = Frame(self.frame, width= 300, height= 50)
         self.frameEtiquetaTotal.grid(row=ubF, column=0)
 
+        self.frameEtiquetaTotal2 = Frame(self.frame, width= 300, height= 50)
+        self.frameEtiquetaTotal2.grid(row=ubF, column=2)
+
         ubF = ubF + 1
 
         self.spaceF3 = Frame(self.frame, width= 300, height= 50)
@@ -85,12 +96,13 @@ class Ventana3:
 
 
         self.botones = Frame(self.frame, width= 300, height = 50, relief='ridge', bd= 2)
-        self.botones.grid(row=ubF, column=1)
+        self.botones.grid(row=ubF, column=2)
 
         ubF = ubF + 1
 
         self.spaceF4 = Frame(self.frame, width= 300, height= 50)
         self.spaceF4.grid(row=ubF, column=0)
+
 
         ubF = ubF + 1
 
@@ -118,14 +130,16 @@ class Ventana3:
         self.tv = ttk.Treeview(self.tvw)
         self.tv['show'] = 'headings'
 
-        self.tv["columns"]=("one","two","three","four","five", "six","seven")
+        self.tv["columns"]=("one","two","three","four","five", "six","seven","eight")
         #reveer
+        '''
         vsb = ttk.Scrollbar(self.tvw2, orient="vertical", command=self.tv.yview)
         #vsb.place(x=30+455+2, y=20, height=200)
         vsb.grid(row= 0, column= 0)
+        '''
 
         #====================================TVColums==============================================================
-        anchoCol = 150
+        anchoCol = 120
 
         self.tv.column("one", width=0)
         self.tv.column("two", width=anchoCol)
@@ -134,21 +148,26 @@ class Ventana3:
         self.tv.column("five", width=anchoCol)
         self.tv.column("six", width=anchoCol)
         self.tv.column("seven", width=anchoCol)
+        self.tv.column("eight", width=anchoCol)
 
 
         #====================================TVHeadings===========================================================
         self.tv.heading("one", text="id")
         self.tv.heading("two", text="Cereal")
         self.tv.heading("three", text="Cantidad")
-        self.tv.heading("four", text="Inicio")
-        self.tv.heading("five", text="Fin")
-        self.tv.heading("six", text="Mejor Cotizacion")
-        self.tv.heading("seven", text="Cosecha Valorizada")
+        self.tv.heading("four", text="Disponible")
+        self.tv.heading("five", text="Inicio")
+        self.tv.heading("six", text="Fin")
+        self.tv.heading("seven", text="Mejor Cotizacion")
+        self.tv.heading("eight", text="Cosecha Valor")
 
 
         #===============================Prueba de insertar datos================================================
 
         self.listar()
+
+        self.spacet = Label(self.tvwSpace)
+        self.spacet.grid(row= 0, column=0)
 
 
         self.frame = Frame(self.master, bg='gray')
@@ -163,8 +182,6 @@ class Ventana3:
 
         self.etTotal = Label(self.frameEtiquetaTotal, text="Valor Total de cosechas: $"+ str(self.acTotales))
         self.etTotal.grid(row= 0, column=0)
-
-
 
         #===========================================Botones============================================================
 
@@ -203,11 +220,16 @@ class Ventana3:
         self.btnSalir = Button(self.botones, text='Salir', background= 'orange red', command = self.master.destroy)
         self.btnSalir.grid(row=1, column= ubBot)
 
-        self.space = Label(self.spaceF)
+        self.space = Label(self.spaceF3)
         self.space.grid(row= 0, column=0)
 
+        self.titleLista2 = Label(self.frameEtiquetaLista2, text="Ventas de la Cocecha", background= 'deep sky blue')
+        self.titleLista2.grid(row= 0, column=0)
+
+        self.titleLista2.config(font=("Courier", 14))
+
         #=====================================Segundo TV===========================================================
-        self.tvV = ttk.Treeview(self.tvw3)
+        self.tvV = ttk.Treeview(self.tvw2)
         self.tvV['show'] = 'headings'
 
         self.tvV["columns"]=("one","two","three")
@@ -221,8 +243,8 @@ class Ventana3:
 
 
         #====================================TVHeadings===========================================================
-        self.tvV.heading("one", text="Cantidad")
-        self.tvV.heading("two", text="Fecha")
+        self.tvV.heading("one", text="Fecha")
+        self.tvV.heading("two", text="Cantidad")
         self.tvV.heading("three", text="Monto")
 
 
@@ -250,14 +272,14 @@ class Ventana3:
                         if state:
                             if cosecha.cereal[:3].upper() == p['simbolo'][:3]:
                                 valoreCosecha = cosecha.cantidadProduccion * p['precio']
-                                self.tv.insert("" , 0, values=(cosecha.id, cosecha.cereal, cosecha.cantidadProduccion, cosecha.inicio, cosecha.fin, p['precio'], valoreCosecha ))
+                                self.tv.insert("" , 0, values=(cosecha.id, cosecha.cereal, cosecha.cantidadProduccion, self.calcularDisponible(cosecha.id, cosecha.cantidadProduccion),cosecha.inicio, cosecha.fin, p['precio'], valoreCosecha))
                                 self.acTotales = self.acTotales + valoreCosecha
                                 state = False
                             else:
                                 precio = self.buscarMejorPrecio(cosecha.cereal)
                                 self.preciosDefinidos.append(precio)
                                 valoreCosecha = cosecha.cantidadProduccion * precio['precio']
-                                self.tv.insert("" , 0, values=(cosecha.id, cosecha.cereal, cosecha.cantidadProduccion, cosecha.inicio, cosecha.fin, precio['precio'], valoreCosecha ))
+                                self.tv.insert("" , 0, values=(cosecha.id, cosecha.cereal, cosecha.cantidadProduccion, self.calcularDisponible(cosecha.id, cosecha.cantidadProduccion), cosecha.inicio, cosecha.fin, precio['precio'], valoreCosecha))
                                 self.acTotales = self.acTotales + valoreCosecha
                                 state = False
                         else:
@@ -266,7 +288,7 @@ class Ventana3:
                             precio = self.buscarMejorPrecio(cosecha.cereal)
                             self.preciosDefinidos.append(precio)
                             valoreCosecha = cosecha.cantidadProduccion * precio['precio']
-                            self.tv.insert("" , 0, values=(cosecha.id, cosecha.cereal, cosecha.cantidadProduccion, cosecha.inicio, cosecha.fin, precio['precio'], valoreCosecha ))
+                            self.tv.insert("" , 0, values=(cosecha.id, cosecha.cereal, cosecha.cantidadProduccion, self.calcularDisponible(cosecha.id, cosecha.cantidadProduccion), cosecha.inicio, cosecha.fin, precio['precio'], valoreCosecha))
                             self.acTotales = self.acTotales + valoreCosecha
 
         print('Mejores precios', self.preciosDefinidos)
@@ -313,8 +335,19 @@ class Ventana3:
 
         self.tvV.delete(*self.tvV.get_children())
         self.ventas = self.ventasControlador.getVentas(self.itemAc[0])
-
+        self.acVentas = 0
         for v in self.ventas:
-            self.tvV.insert("" , 0, values=(v.cantidad, v.fecha, v.monto))
-
+            self.tvV.insert("" , 0, values=(v.fecha, v.cantidad, v.monto))
+            self.acVentas = self.acVentas + v.monto
         self.tvV.pack()
+
+        self.etTotal = Label(self.frameEtiquetaTotal2, text="Total de las ventas $"+ str(self.acVentas))
+        self.etTotal.grid(row= 0, column=0)
+
+    def calcularDisponible(self, cosechaId, cantidad):
+        ventas = self.ventasControlador.getVentas(str(cosechaId))
+        ac = 0
+        for v in ventas:
+            ac = ac + v.cantidad
+        cantidadDisponible = cantidad - ac
+        return cantidadDisponible
