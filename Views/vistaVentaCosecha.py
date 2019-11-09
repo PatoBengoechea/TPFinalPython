@@ -4,10 +4,7 @@ from tkinter import *
 from Controller.prueba import armarListadoDeTrades #borrar
 from Controller.CosechaControler import CosechaController
 
-from Controller.controladorPrecios import controladorPrecios
-
-from Views.vistaOp import Ventana5
-from Views.vistaAgregarCosecha import Ventana6
+from Controller.VentasController import VentasController
 
 class Ventana7:
 
@@ -72,29 +69,32 @@ class Ventana7:
         self.space = Label(self.spaceF)
         self.space.grid(row= 0, column=0)
 
-        self.datoOp = Label(self.createUsuarioL, text='Id Cosecha: ' + self.idCosecha)
+        self.datoOp = Label(self.createUsuarioL, text='Venta de : ' + self.cereal)
         self.datoOp.grid(row= 0, column=0)
 
-        self.usuario = Entry(self.createUsuarioE, textvariable=self.cantidad)
+        self.datoOp = Label(self.createUsuarioE, text='Cantidad de cosecha : ' + str(self.v3.itemAc[2]))
+        self.datoOp.grid(row= 0, column=0)
+
+        self.datoOp = Label(self.createPassL, text= 'Precio de Venta: ' + self.precio)
+        self.datoOp.grid(row= 0, column=0)
+
+
+        self.datoOp = Label(self.createNameL, text='Ingrese cantidad a vender: ')
+        self.datoOp.grid(row= 0, column=0)
+
+        self.usuario = Entry(self.createNameE, textvariable=self.cantidad)
         self.usuario.grid(row= 0, column=0)
-
-        self.datoOp = Label(self.createPassL, text= self.cereal)
-        self.datoOp.grid(row= 0, column=0)
-
-
-        self.datoOp = Label(self.createNameL, text='Precio: ' + self.precio)
-        self.datoOp.grid(row= 0, column=0)
-
-        self.datoOp = Label(self.createSurnameL, text='prueba')
-        self.datoOp.grid(row= 0, column=0)
 
         self.space = Label(self.spaceF)
         self.space.grid(row= 0, column=0)
 
         #=======================================Botones================================================================
-        self.btnCrear = Button(self.botones, text='Agregar', background= 'pale green', command = "")
+        self.btnCrear = Button(self.botones, text='Vender', background= 'pale green', command = lambda: self.venderCosecha())
         self.btnCrear.grid(row=0, column= 1)
 
         self.btnSalir = Button(self.botones, text='Salir', background= 'orange red', command = self.master.destroy)
         self.btnSalir.grid(row=0, column= 2)
 
+    def venderCosecha(self):
+        a = VentasController()
+        print(a.addVenta(self.idCosecha, self.precio, self.cantidad.get()))

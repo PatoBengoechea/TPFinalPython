@@ -5,6 +5,7 @@ from Controller.prueba import armarListadoDeTrades #borrar
 from Controller.CosechaControler import CosechaController
 
 from Controller.controladorPrecios import controladorPrecios
+from  Controller.VentasController import VentasController
 
 from Views.vistaOp import Ventana5
 from Views.vistaAgregarCosecha import Ventana6
@@ -16,7 +17,7 @@ class Ventana3:
 
         self.master = master
         self.master.title('Panel Principal')
-        self.master.geometry('1400x500+0+0')
+        self.master.geometry('1600x1000+0+0')
         self.frame = Frame(self.master)
         self.frame.pack()
 
@@ -27,6 +28,7 @@ class Ventana3:
         self.acTotales = 0
 
         self.cosechasControlador = CosechaController()
+        self.ventasControlador = VentasController()
 
 
 
@@ -81,8 +83,19 @@ class Ventana3:
 
         ubF = ubF + 1
 
+
         self.botones = Frame(self.frame, width= 300, height = 50, relief='ridge', bd= 2)
         self.botones.grid(row=ubF, column=1)
+
+        ubF = ubF + 1
+
+        self.spaceF4 = Frame(self.frame, width= 300, height= 50)
+        self.spaceF4.grid(row=ubF, column=0)
+
+        ubF = ubF + 1
+
+        self.tvw3 = Frame(self.frame, width= 300, height= 50) #test
+        self.tvw3.grid(row=ubF, column=0)
 
 
         #======================================Labels and Entries=================================================================
@@ -190,8 +203,36 @@ class Ventana3:
         self.btnSalir = Button(self.botones, text='Salir', background= 'orange red', command = self.master.destroy)
         self.btnSalir.grid(row=1, column= ubBot)
 
-        #=====================================Buscador===========================================================
+        self.space = Label(self.spaceF)
+        self.space.grid(row= 0, column=0)
 
+        #=====================================Segundo TV===========================================================
+        self.tvV = ttk.Treeview(self.tvw3)
+        self.tvV['show'] = 'headings'
+
+        self.tvV["columns"]=("one","two","three")
+
+        #====================================TVColums==============================================================
+        anchoCol = 150
+
+        self.tvV.column("one", width=anchoCol)
+        self.tvV.column("two", width=anchoCol)
+        self.tvV.column("three", width=anchoCol)
+
+
+        #====================================TVHeadings===========================================================
+        self.tvV.heading("one", text="Cantidad")
+        self.tvV.heading("two", text="Fecha")
+        self.tvV.heading("three", text="Monto")
+
+
+        #===============================Prueba de insertar datos================================================
+
+        self.listar2()
+
+
+        self.frame = Frame(self.master, bg='gray')
+        self.frame.pack()
 
         self.master.mainloop()
 
@@ -258,6 +299,7 @@ class Ventana3:
         item = self.tv.item(curItem)
         self.itemAc = item['values']
         print(self.itemAc)
+        self.listar2()
 
     def new_window3(self):
         # t es un parametro de tipo que me permite conocer por que metodo se solicito la nueva ventana
@@ -267,5 +309,12 @@ class Ventana3:
     def venderCosecha(self):
         self.new_window3()
 
+    def listar2(self):
 
+        self.tvV.delete(*self.tvV.get_children())
+        self.ventas = self.ventasControlador.getVentas(self.itemAc[0])
 
+        for v in self.ventas:
+            self.tvV.insert("" , 0, values=(v.cantidad, v.fecha, v.monto))
+
+        self.tvV.pack()

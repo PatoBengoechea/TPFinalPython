@@ -12,23 +12,27 @@ class VentaDataBase:
         cursor = db.main()
         monto = precioUnitario*cantidad
         try:
-            cursor.cosecha.update_one({'_id': ObjectId(cosecha.id)}, {"$inc":{"cantidadParcial": -monto}})
+            #Juanchi comento esta linea
+            #cursor.cosecha.update_one({'_id': cosecha}, {"$inc":{"cantidadParcial": -monto}})
             newVenta = {
-                'cosecha': ObjectId(cosecha.id),
+                'cosecha': cosecha,
                 'fecha' : date.today().strftime("%m/%d/%y"),
                 'cantidad' : cantidad,
                 'monto' : monto
             }
             cursor.ventas.insert_one(newVenta)
+            print('Venta Agregada')
+            return True
         except NameError:
             print(NameError)
+            return False
 
 
     def getVentas(self, cosecha):
         db = Database()
         cursor = db.main()
         try:
-            ventasJSON = cursor.ventas.find({"cosecha": ObjectId(cosecha.id)})
+            ventasJSON = cursor.ventas.find({"cosecha": cosecha})
             ventas = []
             for v in ventasJSON:
                 ven = Venta()
