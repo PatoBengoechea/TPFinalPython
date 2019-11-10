@@ -12,8 +12,6 @@ class VentaDataBase:
         cursor = db.main()
         monto = precioUnitario*cantidad
         try:
-            #Juanchi comento esta linea
-            #cursor.cosecha.update_one({'_id': cosecha}, {"$inc":{"cantidadParcial": -monto}})
             newVenta = {
                 'cosecha': cosecha,
                 'fecha': date.today().strftime("%m/%d/%y"),
@@ -21,7 +19,7 @@ class VentaDataBase:
                 'monto': monto
             }
             cursor.ventas.insert_one(newVenta)
-            print('Venta Agregada')
+            #print('Venta Agregada')
             return True
         except NameError:
             print(NameError)

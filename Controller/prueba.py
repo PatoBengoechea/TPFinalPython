@@ -23,12 +23,7 @@ def buscarInstrumentos(c):
 
     a = getInstrumentos()
 
-    print(type(a))
-
     b = a['instruments']
-
-    print(b)
-
     for i in b:
         if i['instrumentId']['symbol'][:l] == c:
             print(i['instrumentId']['symbol'])
@@ -101,7 +96,7 @@ def dbManager():
 
 def cargarDolar(db, trade):
     #Reformar para que tome cualquier mercado
-    print(DataFrame(trade['trades']))
+    #print(DataFrame(trade['trades']))
     for i in trade['trades']:
         dolar_doc = {
             'price': i['price'],
@@ -113,18 +108,3 @@ def cargarDolar(db, trade):
         db.DOSep19.insert_one(dolar_doc)
         print ('Carga exitosa en el documento: ', dolar_doc)
 
-def main():
-    #buscarInstrumentos('SO')
-    #a = armarListadoDeTrades('DOSep19')
-
-    #graficar(armarListadoDeTrades('SOJ.ROSNov19'))
-    #getInstrumentos()
-    #listarInstrumentos()
-    #db = dbManager()
-    #cargarDolar(db, a)
-
-    #buscarInstrumentos('DOSep19')
-    print(armarTrades('DODic19'))
-    #print(DataFrame(getListaSimbolos()))
-
-main()

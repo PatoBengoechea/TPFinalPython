@@ -18,8 +18,6 @@ class CosechaController:
     def getCocecha(self, productorActual):
         dbCosecha = CosechaData()
         cosechas = dbCosecha.getCosechas(productorActual)
-        ultima = dbCosecha.getLast()
-        print('La ultima cosecha', ultima)
         if(cosechas != None):
             return cosechas
         else:

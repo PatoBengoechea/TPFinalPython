@@ -128,9 +128,9 @@ class Ventana1:
     def ingresar(self):
         controller = UserController()
         a = controller.validateUser(self.user.get(), self.password.get())
-        print(a.name)
+        print(a)
         if a != None:
-            self.respuesta = Label(self.respuesta, text=('Bienvenido: ' + a.name), background= 'pale green')
+            self.respuesta = Label(self.respuesta, text=('Bienvenido/a: ' + a.name), background= 'pale green')
             self.respuesta.grid(row= 0, column=0)
             self.name = a.name
             self.surname = a.surname
@@ -139,7 +139,7 @@ class Ventana1:
 
         else:
             print('Usuario vacio')
-            self.respuesta = Label(self.respuesta, text=a)
+            self.respuesta = Label(self.respuesta, text="Usuario o contrase;a incorrecto", background= 'coral')
             self.respuesta.grid(row= 0, column=0)
 
 

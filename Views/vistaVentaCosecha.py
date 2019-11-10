@@ -12,7 +12,7 @@ class Ventana7:
 
         self.master = master
         self.master.title('Panel Principal')
-        self.master.geometry('700x300+0+0')
+        self.master.geometry('800x300+0+0')
         self.frame = Frame(self.master)
         self.frame.pack()
 
@@ -21,6 +21,10 @@ class Ventana7:
         self.idCosecha = v3.itemAc[0]
         self.cereal = v3.itemAc[1]
         self.precio = v3.itemAc[6]
+
+        self.cantidadProduccion = int(self.v3.itemAc[2])
+
+        self.cantidadDisponible = self.v3.calcularDisponible(self.idCosecha, self.cantidadProduccion)
 
         self.cantidad = IntVar()
 
@@ -72,7 +76,7 @@ class Ventana7:
         self.datoOp = Label(self.createUsuarioL, text='Venta de : ' + self.cereal)
         self.datoOp.grid(row= 0, column=0)
 
-        self.datoOp = Label(self.createUsuarioE, text='Cantidad de cosecha : ' + str(self.v3.itemAc[2]))
+        self.datoOp = Label(self.createUsuarioE, text='Cantidad Diponible : ' + str(self.cantidadDisponible))
         self.datoOp.grid(row= 0, column=0)
 
         self.datoOp = Label(self.createPassL, text= 'Precio de Venta: ' + self.precio)
@@ -97,13 +101,17 @@ class Ventana7:
 
     def venderCosecha(self):
         a = VentasController()
-        resp = a.addVenta(self.idCosecha, float(self.precio), int(self.cantidad.get()))
-        if resp:
+        resp = a.addVenta(self.idCosecha, float(self.precio), int(self.cantidad.get()), self.cantidadDisponible)
+        if resp[0]:
             self.respuestaE = Label(self.respuesta, text='Venta ingresada', background='pale green')
             self.respuestaE.grid(row= 0, column=0)
             self.v3.listar2()
+        elif resp[1] == 2:
+            self.respuestaE = Label(self.respuesta, text='La cantidad ingrsada supera la cantidad disponible', background='coral')
+            self.respuestaE.grid(row= 0, column=0)
         else:
-            self.respuestaE = Label(self.respuesta, text='Error al igresar la venta', background='coral')
+            self.master.geometry('1200x300+0+0')
+            self.respuestaE = Label(self.respuesta, text=('Error al igresar la venta consulte al administrador. Codigo de Error ', resp[1]), background='coral')
             self.respuestaE.grid(row= 0, column=0)
 
 

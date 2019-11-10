@@ -291,7 +291,7 @@ class Ventana3:
                             self.tv.insert("" , 0, values=(cosecha.id, cosecha.cereal, cosecha.cantidadProduccion, self.calcularDisponible(cosecha.id, cosecha.cantidadProduccion), cosecha.inicio, cosecha.fin, precio['precio'], valoreCosecha))
                             self.acTotales = self.acTotales + valoreCosecha
 
-        print('Mejores precios', self.preciosDefinidos)
+        print('Mejores precios', self.preciosDefinidos) #borrar
         self.tv.pack()
 
     def new_window(self):
@@ -311,7 +311,6 @@ class Ventana3:
         # t es un parametro de tipo que me permite conocer por que metodo se solicito la nueva ventana
         self.newWindow = Toplevel(self.master)
         self.app = Ventana6(self.newWindow, self, self.user)
-        print('esto es 2',self.app)
 
     def agregarCosecha(self):
         self.new_window2()
@@ -320,7 +319,7 @@ class Ventana3:
         curItem = self.tv.focus()
         item = self.tv.item(curItem)
         self.itemAc = item['values']
-        print(self.itemAc)
+        #print(self.itemAc)
         self.listar2()
 
     def new_window3(self):

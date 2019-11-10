@@ -6,6 +6,7 @@ from tkinter import messagebox
 
 from Controller.prueba import armarListadoDeTrades
 from Controller.prueba import getListaSimbolos
+from Controller.controladorPrecios import controladorPrecios
 
 
 class Ventana5:
@@ -16,8 +17,11 @@ class Ventana5:
         self.master.title('Precios de Futuros')
         self.master.geometry('500x400+0+0')
         self.mercado = 'DODic19'
-        self.trades = armarListadoDeTrades(self.mercado)
-        self.symbols = getListaSimbolos()
+
+        self.cP = controladorPrecios(self.mercado)
+
+        self.trades = self.cP.armarTrades(self.mercado)
+        self.symbols = self.cP.getListaSimbolos()
 
 
         #=====================================Treeview===========================================================
@@ -42,17 +46,6 @@ class Ventana5:
         #self.tv.heading("four", text="DNI")
 
         #===============================Prueba de insertar datos================================================
-
-        '''
-        cdNegocio = NegocioSocio()
-        socios = cdNegocio.todos()
-
-        print('Prueba')
-        for s in socios:
-            self.tv.insert("" , 0, values=(s.id,s.nombre,s.apellido,s.dni))
-
-        self.tv.pack()
-        '''
 
         self.listar()
 

@@ -20,7 +20,6 @@ class Ventana6:
         self.inicio = StringVar()
         self.fin = StringVar()
 
-        #====================================Variables===========================================================
 
         #=====================================Frames================================================================
 
@@ -68,8 +67,8 @@ class Ventana6:
         self.datoOp = Label(self.createUsuarioL, text='Cereal: ')
         self.datoOp.grid(row= 0, column=0)
 
-        self.usuario = Entry(self.createUsuarioE, textvariable=self.cereal)
-        self.usuario.grid(row= 0, column=0)
+        #self.usuario = Entry(self.createUsuarioE, textvariable=self.cereal)
+        #self.usuario.grid(row= 0, column=0)
 
         self.datoOp = Label(self.createPassL, text='Cantidad: ')
         self.datoOp.grid(row= 0, column=0)
@@ -92,6 +91,19 @@ class Ventana6:
         self.space = Label(self.spaceF)
         self.space.grid(row= 0, column=0)
 
+        #====================================Buscador===========================================================
+
+        cereales = ['Soja','Trigo','Maiz']
+
+        self.comboExample = ttk.Combobox(self.createUsuarioE,
+                                    values= cereales
+                                    )
+        print(dict(self.comboExample))
+        self.comboExample.grid(column=0, row=1)
+        self.comboExample.current(1)
+
+        self.comboExample.bind("<<ComboboxSelected>>", self.callbackFunc)
+
         #=======================================Botones================================================================
         self.btnCrear = Button(self.botones, text='Agregar', background= 'pale green', command = lambda: self.agregarCosecha())
         self.btnCrear.grid(row=0, column= 1)
@@ -106,7 +118,7 @@ class Ventana6:
         #ver de agregar id con last object como propiedad del objeto, para pasar como primer parametro
         #Por el momento Hard code
 
-        response = a.createCocecha(a.idSetter() ,self.cereal.get(), self.cantidad.get(), self.inicio.get(), self.fin.get(), self.user)
+        response = a.createCocecha(a.idSetter() ,self.cereal, self.cantidad.get(), self.inicio.get(), self.fin.get(), self.user)
 
         if response != None:
             self.respuestaL = Label(self.respuesta, text='Cosecha Agregada Exitosamente', background= 'pale green')
@@ -117,3 +129,8 @@ class Ventana6:
             self.respuestaL.grid(row= 0, column=0)
 
         self.vPadre.listar()
+
+    def callbackFunc(self, event):
+        print("New Element Selected")
+        print('Valor del combo: ', self.comboExample.get())
+        self.cereal = self.comboExample.get()

@@ -24,39 +24,31 @@ class controladorPrecios:
     def definirMejor(self):
         max = {'precio': 1, 'simbolo':""}
         instrumentos = self.buscarInstrumentos()
-        for t in instrumentos:
-            if t['precio'] > max['precio']:
-                max['precio'] = t['precio']
-                max['simbolo'] = t['nombre']
+        for i in instrumentos:
+            if i[0] > max['precio']:
+                max['precio'] = i[0]
+                max['simbolo'] = i[1]
         return max
 
 
 
+    #Funcion clave de la perfomance de carga de precios
     def buscarInstrumentos(self):
-
         a = self.getInstrumentos()
-
         b = a['instruments']
-
-        print(b)
         array = []
-        p = {"precio":0, "nombre": ""}
         for i in b:
             t = i['instrumentId']['symbol']
             if (t[:3] == self.simbolo) and (len(t) <= 12):
-
-                print(t)
                 a = self.armarTrades(t)
                 b = a['trades']
                 if(b != []):
-                    p['precio'] = b[-1]['price']
-                    print(p['precio'])
+                    n = (b[-1]['price'], t)
+                    print(n)
+                    array.append(n)
 
-                p['nombre'] = i['instrumentId']['symbol']
-
-                array.append(p)
-                print(array)
-
+        print(array)
+        
         return array
 
     def getInstrumentos(self):
@@ -69,3 +61,11 @@ class controladorPrecios:
                                            end_date='2019-11-07')
 
         return trades
+
+    def getListaSimbolos(self):
+        instruments = pyRofex.get_all_instruments()
+        lI = []
+        for i in instruments['instruments']:
+            lI.append(i['instrumentId']['symbol'])
+        lI.sort()
+        return lI
