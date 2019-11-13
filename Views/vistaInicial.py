@@ -130,7 +130,7 @@ class Ventana3:
         self.tv = ttk.Treeview(self.tvw)
         self.tv['show'] = 'headings'
 
-        self.tv["columns"]=("one","two","three","four","five", "six","seven","eight")
+        self.tv["columns"]=("one","two","three","four","five", "six","seven","eight", "nine")
         #reveer
         '''
         vsb = ttk.Scrollbar(self.tvw2, orient="vertical", command=self.tv.yview)
@@ -149,6 +149,7 @@ class Ventana3:
         self.tv.column("six", width=anchoCol)
         self.tv.column("seven", width=anchoCol)
         self.tv.column("eight", width=anchoCol)
+        self.tv.column("nine", width=anchoCol)
 
 
         #====================================TVHeadings===========================================================
@@ -160,6 +161,7 @@ class Ventana3:
         self.tv.heading("six", text="Fin")
         self.tv.heading("seven", text="Mejor Cotizacion")
         self.tv.heading("eight", text="Cosecha Valor")
+        self.tv.heading("nine", text="Mejor precio de")
 
 
         #===============================Prueba de insertar datos================================================
@@ -174,14 +176,6 @@ class Ventana3:
         self.frame.pack()
 
         self.tv.bind('<ButtonRelease-1>', self.selectItem)
-
-        #+++++++++++++++++++++++++++++++++++++Totales++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-        self.space = Label(self.spaceF3)
-        self.space.grid(row= 0, column=0)
-
-        self.etTotal = Label(self.frameEtiquetaTotal, text="Valor Total de cosechas: $"+ str(self.acTotales))
-        self.etTotal.grid(row= 0, column=0)
 
         #===========================================Botones============================================================
 
@@ -272,14 +266,14 @@ class Ventana3:
                         if state:
                             if cosecha.cereal[:3].upper() == p['simbolo'][:3]:
                                 valoreCosecha = cosecha.cantidadProduccion * p['precio']
-                                self.tv.insert("" , 0, values=(cosecha.id, cosecha.cereal, cosecha.cantidadProduccion, self.calcularDisponible(cosecha.id, cosecha.cantidadProduccion),cosecha.inicio, cosecha.fin, p['precio'], valoreCosecha))
+                                self.tv.insert("" , 0, values=(cosecha.id, cosecha.cereal, cosecha.cantidadProduccion, self.calcularDisponible(cosecha.id, cosecha.cantidadProduccion),cosecha.inicio, cosecha.fin, p['precio'], valoreCosecha, p['simbolo']))
                                 self.acTotales = self.acTotales + valoreCosecha
                                 state = False
                             else:
                                 precio = self.buscarMejorPrecio(cosecha.cereal)
                                 self.preciosDefinidos.append(precio)
                                 valoreCosecha = cosecha.cantidadProduccion * precio['precio']
-                                self.tv.insert("" , 0, values=(cosecha.id, cosecha.cereal, cosecha.cantidadProduccion, self.calcularDisponible(cosecha.id, cosecha.cantidadProduccion), cosecha.inicio, cosecha.fin, precio['precio'], valoreCosecha))
+                                self.tv.insert("" , 0, values=(cosecha.id, cosecha.cereal, cosecha.cantidadProduccion, self.calcularDisponible(cosecha.id, cosecha.cantidadProduccion), cosecha.inicio, cosecha.fin, precio['precio'], valoreCosecha, precio['simbolo']))
                                 self.acTotales = self.acTotales + valoreCosecha
                                 state = False
                         else:
@@ -288,8 +282,16 @@ class Ventana3:
                             precio = self.buscarMejorPrecio(cosecha.cereal)
                             self.preciosDefinidos.append(precio)
                             valoreCosecha = cosecha.cantidadProduccion * precio['precio']
-                            self.tv.insert("" , 0, values=(cosecha.id, cosecha.cereal, cosecha.cantidadProduccion, self.calcularDisponible(cosecha.id, cosecha.cantidadProduccion), cosecha.inicio, cosecha.fin, precio['precio'], valoreCosecha))
+                            self.tv.insert("" , 0, values=(cosecha.id, cosecha.cereal, cosecha.cantidadProduccion, self.calcularDisponible(cosecha.id, cosecha.cantidadProduccion), cosecha.inicio, cosecha.fin, precio['precio'], valoreCosecha, precio['simbolo']))
                             self.acTotales = self.acTotales + valoreCosecha
+
+        #+++++++++++++++++++++++++++++++++++++Totales++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        self.space = Label(self.spaceF3)
+        self.space.grid(row= 0, column=0)
+
+        self.etTotal = Label(self.frameEtiquetaTotal, text="Valor Total de cosechas: $"+ str(self.acTotales))
+        self.etTotal.grid(row= 0, column=0)
 
         print('Mejores precios', self.preciosDefinidos) #borrar
         self.tv.pack()
