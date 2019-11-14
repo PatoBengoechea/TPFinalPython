@@ -1,9 +1,6 @@
 from tkinter import ttk
 from tkinter import *
 
-from Controller.prueba import armarListadoDeTrades #borrar
-from Controller.CosechaControler import CosechaController
-
 from Controller.VentasController import VentasController
 
 class Ventana7:

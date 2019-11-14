@@ -14,7 +14,7 @@ class VentaDataBase:
         try:
             newVenta = {
                 'cosecha': cosecha,
-                'fecha': date.today().strftime("%m/%d/%y"),
+                'fecha': date.today().strftime("%d/%m/%y"),
                 'cantidad': cantidad,
                 'monto': monto
             }

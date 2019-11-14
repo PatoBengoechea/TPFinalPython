@@ -1,7 +1,5 @@
 from tkinter import ttk
 from tkinter import *
-
-from Controller.prueba import armarListadoDeTrades #borrar
 from Controller.CosechaControler import CosechaController
 
 from Controller.controladorPrecios import controladorPrecios
@@ -29,6 +27,8 @@ class Ventana3:
 
         self.cosechasControlador = CosechaController()
         self.ventasControlador = VentasController()
+
+        self.first = True
 
 
 
@@ -217,7 +217,7 @@ class Ventana3:
         self.space = Label(self.spaceF3)
         self.space.grid(row= 0, column=0)
 
-        self.titleLista2 = Label(self.frameEtiquetaLista2, text="Ventas de la Cocecha", background= 'deep sky blue')
+        self.titleLista2 = Label(self.frameEtiquetaLista2, text="Ventas de la Cosecha", background= 'deep sky blue')
         self.titleLista2.grid(row= 0, column=0)
 
         self.titleLista2.config(font=("Courier", 14))
@@ -318,11 +318,12 @@ class Ventana3:
         self.new_window2()
 
     def selectItem(self, a):
-        curItem = self.tv.focus()
-        item = self.tv.item(curItem)
-        self.itemAc = item['values']
-        #print(self.itemAc)
-        self.listar2()
+
+            curItem = self.tv.focus()
+            item = self.tv.item(curItem)
+            self.itemAc = item['values']
+            #print(self.itemAc)
+            self.listar2()
 
     def new_window3(self):
         # t es un parametro de tipo que me permite conocer por que metodo se solicito la nueva ventana

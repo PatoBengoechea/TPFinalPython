@@ -1,19 +1,11 @@
 import pyRofex
-import pandas as pd
-import matplotlib.pyplot as plt
-from pandas import DataFrame
-from _datetime import datetime
-import sys
-from datetime import datetime
-import pymongo
-from pymongo import MongoClient
-import json
-from pymongo.errors import ConnectionFailure
+from datetime import date
 
 
 class controladorPrecios:
 
     def __init__(self, simbolo):
+
         pyRofex.initialize(user='juanichacho2557',
                password='gpovgB1!',
                account='sampleAccount',
@@ -56,9 +48,24 @@ class controladorPrecios:
         return instruments
 
     def armarTrades(self, inst):
+        a = date.today().strftime("%Y-%m-%d")
+        c = int(a[8:]) - 1
+        e = a[:8] + str(c)
         trades = pyRofex.get_trade_history(ticker= inst,
-                                           start_date='2019-11-07',
-                                           end_date='2019-11-07')
+                                           start_date= e,
+                                           end_date= date.today().strftime("%Y-%m-%d"))
+
+        return trades
+
+    def armarTrades2(self, inst):
+        #Estas variables calculan la resta del dia menos 5 dias a la fecha de hoy
+        a = date.today().strftime("%Y-%m-%d")
+        c = int(a[8:]) - 5
+        e = a[:8] + str(c)
+
+        trades = pyRofex.get_trade_history(ticker= inst,
+                                           start_date= "2019-10-01",
+                                           end_date= date.today().strftime("%Y-%m-%d"))
 
         return trades
 
@@ -69,3 +76,4 @@ class controladorPrecios:
             lI.append(i['instrumentId']['symbol'])
         lI.sort()
         return lI
+

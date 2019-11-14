@@ -1,9 +1,6 @@
 from tkinter import ttk
 from tkinter import *
 from Controller.UserController import UserController
-import pandas as pd
-import matplotlib.pyplot as plt
-from tkinter import messagebox
 from Views.vistaNuevoUsuario import Ventana2
 from Views.vistaInicial import Ventana3
 

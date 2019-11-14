@@ -4,8 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from tkinter import messagebox
 
-from Controller.prueba import armarListadoDeTrades
-from Controller.prueba import getListaSimbolos
+
 from Controller.controladorPrecios import controladorPrecios
 
 
@@ -20,7 +19,7 @@ class Ventana5:
 
         self.cP = controladorPrecios(self.mercado)
 
-        self.trades = self.cP.armarTrades(self.mercado)
+        self.trades = self.cP.armarTrades2(self.mercado)
         self.symbols = self.cP.getListaSimbolos()
 
 
@@ -130,10 +129,13 @@ class Ventana5:
         print("New Element Selected")
         print('Valor del combo: ', self.comboExample.get())
         self.mercado = self.comboExample.get()
-        self.trades = armarListadoDeTrades(self.mercado)
+        self.trades = self.cP.armarTrades2(self.mercado)
         self.listar()
 
         self.datoOp2.destroy()
 
         self.datoOp2 = Label(self.detalleI, text=self.mercado)
         self.datoOp2.grid(row= 0, column=2)
+
+from datetime import date
+
